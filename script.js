@@ -2,11 +2,11 @@ const { getListOfCoins } = require("./features/DisplayCoinDashboard/read-and-han
 const { writeCoinsInDB } = require("./features/DisplayCoinDashboard/write");
 
 const runScript = async () => {
-    // Step 1: Handle datas
+    // // Step 1: Handle datas
     // const data = await getListOfCoins();
-    // console.log(data);
+    // // console.log(data);
 
-    // Step 2: Save above datas in temp file
+    // // Step 2: Save above datas in temp file
     // require('fs').writeFile(
     //     './db.json',
     //     JSON.stringify(data),
