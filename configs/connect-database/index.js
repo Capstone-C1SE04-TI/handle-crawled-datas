@@ -1,7 +1,7 @@
 const { initializeApp, cert } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
 
-const serviceAccount = require("./service-account-Capstone-C1SE04-TI.json");
+const serviceAccountMain = require("./service-account-Capstone-C1SE04-TI-Main.json");
 const serviceAccountCrawl = require("./service-account-Capstone-C1SE04-TI-Crawl.json");
 
 initializeApp({
