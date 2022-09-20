@@ -3,6 +3,7 @@
 .env
 
 db.json
+schemas.json
 
 service-account-Capstone-C1SE04-TI-Crawl.json
 service-account-Capstone-C1SE04-TI-Main.json
