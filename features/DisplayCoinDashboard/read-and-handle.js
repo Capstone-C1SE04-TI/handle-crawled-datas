@@ -5,7 +5,7 @@ const getListOfCoins = async () => {
     let coinsList = [];
     
     let coins = await database
-        .collection("tokens")
+        .collection("coins")
         .orderBy("cmc_rank", "asc")
         .get();
 
