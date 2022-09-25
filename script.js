@@ -1,5 +1,5 @@
 const { getListOfCoins } = require("./features/DisplayCoinDashboard/read-and-handle")
-const { writeCoinsInDB } = require("./features/DisplayCoinDashboard/write");
+const { writeCoinsInDB, reduceTokensInDB } = require("./features/DisplayCoinDashboard/write");
 
 const runScript = async () => {
     // Step 1: Handle datas
@@ -18,6 +18,9 @@ const runScript = async () => {
 
     // Step 3: Write handled datas into DB
     // await writeCoinsInDB();
+
+    // Step 4 (Optional): Reduce documents
+    // await reduceTokensInDB();
 }
 
 runScript()

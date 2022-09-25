@@ -11,4 +11,16 @@ const writeCoinsInDB = async () => {
     });
 }
 
-module.exports = { writeCoinsInDB };
+const reduceTokensInDB = async () => {
+    const tokens = await database.collection("tokens")
+        .orderBy("id", "asc")
+        .startAt(61)
+        .limit(48)
+        .get();
+    
+    tokens.forEach((token) => {
+        token.ref.delete()
+    });
+}
+
+module.exports = { writeCoinsInDB, reduceTokensInDB };
