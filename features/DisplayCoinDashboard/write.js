@@ -6,7 +6,7 @@ const { randomFirestoreDocumentId } = require("../../helpers");
 const writeCoinsInDB = async () => {
     datas.forEach(async (data) => {
         const docId = randomFirestoreDocumentId();
-        await database.collection("coins").doc(docId).set(data);
+        await database.collection("tokens").doc(docId).set(data);
 
     });
 }
@@ -23,4 +23,14 @@ const reduceTokensInDB = async () => {
     });
 }
 
-module.exports = { writeCoinsInDB, reduceTokensInDB };
+const updateTokensID = async () => {
+    const tokens = await database.collection("tokens")
+        .orderBy("id", "asc")
+        .get();
+
+    tokens.forEach((doc) => {
+        doc.ref.update({ id: doc.get("id") + 10 });
+    });
+}
+
+module.exports = { writeCoinsInDB, reduceTokensInDB, updateTokensID };

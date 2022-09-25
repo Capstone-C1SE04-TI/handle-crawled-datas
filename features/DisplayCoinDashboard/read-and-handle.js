@@ -3,7 +3,7 @@ const database = require("../../configs/connect-database");
 const getListOfCoins = async () => {
     let id = 1;
     let coinsList = [];
-    
+
     let coins = await database
         .collection("coins")
         .orderBy("cmc_rank", "asc")
@@ -34,4 +34,20 @@ const getListOfCoins = async () => {
     return coinsList;
 }
 
-module.exports = { getListOfCoins };
+const getListOfTokens = async () => {
+    let coinsList = [];
+
+    let coins = await database
+        .collection("coins")
+        .orderBy("id", "asc")
+        .get();
+
+    coins.forEach((doc) => {
+        const data = doc.data();
+        coinsList.push(data);
+    });
+
+    return coinsList;
+}
+
+module.exports = { getListOfCoins, getListOfTokens };
