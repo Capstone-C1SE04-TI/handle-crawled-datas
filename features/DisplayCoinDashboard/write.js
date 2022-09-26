@@ -1,6 +1,6 @@
 const database = require("../../configs/connect-database");
 const datas = require('../../db.json');
-
+const { FieldValue } = require("firebase-admin/firestore");
 const { randomFirestoreDocumentId } = require("../../helpers");
 
 const writeCoinsInDB = async () => {
@@ -17,7 +17,7 @@ const reduceTokensInDB = async () => {
         .startAt(61)
         .limit(48)
         .get();
-    
+
     tokens.forEach((token) => {
         token.ref.delete()
     });
@@ -33,4 +33,16 @@ const updateTokensID = async () => {
     });
 }
 
-module.exports = { writeCoinsInDB, reduceTokensInDB, updateTokensID };
+const removeDocumentField = async () => {
+    const users = await database.collection("users")
+        .orderBy("userId", "asc")
+        .startAt(1)
+        .limit(30)
+        .get();
+
+    users.forEach((doc) => {
+        doc.ref.update({ userId: FieldValue.delete() });
+    });
+}
+
+module.exports = { writeCoinsInDB, reduceTokensInDB, updateTokensID, removeDocumentField };
