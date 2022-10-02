@@ -1,7 +1,7 @@
-const database = require("../../configs/connect-database");
-const datas = require('../../db.json');
+const database = require("../configs/connect-database");
+const datas = require('../db.json');
 const { FieldValue } = require("firebase-admin/firestore");
-const { randomFirestoreDocumentId } = require("../../helpers");
+const { randomFirestoreDocumentId, convertUnixTimestampToNumber } = require("../helpers");
 
 const writeCoinsInDB = async () => {
     datas.forEach(async (data) => {
@@ -45,4 +45,28 @@ const removeDocumentField = async () => {
     });
 }
 
-module.exports = { writeCoinsInDB, reduceTokensInDB, updateTokensID, removeDocumentField };
+const testTimestamps = async () => {
+    let timestamps = datas.sort().reverse();
+    
+    let count = 0;
+    let firstDay = Math.floor(timestamps[0] / 1000000);
+
+
+    // timestamps.map((timestamp) => {
+    //     if (count == 7) {
+    //         return;
+    //     }
+    //     else {
+    //         const currentTimestamp = Math.floor(timestamp / 1000000);
+            
+    //         if (currentTimestamp >= firstDay && currentTimestamp <= firstDay ) {
+
+    //         }
+    //     }
+    // })
+
+    // console.log(timestamps);
+    // console.log(init);
+}
+
+module.exports = { writeCoinsInDB, reduceTokensInDB, updateTokensID, removeDocumentField, testTimestamps };
