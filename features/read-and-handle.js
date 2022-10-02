@@ -1,5 +1,5 @@
 const database = require("../configs/connect-database");
-const { query, collection, where, getDocs } = require("firebase/firestore");
+const { query, collection, where, getDocs, getFirestore } = require("firebase/firestore");
 const { convertUnixTimestampToNumber } = require("../helpers");
 
 const getListOfCoins = async () => {
@@ -38,40 +38,29 @@ const getListOfCoins = async () => {
 
 const getListOfTokens = async () => {
     let tokensList = [];
-
-    // const queryStatement = query(
-    //     collection(database, "tokens"),
-    //     where("name", "==", "Bitcoin"),
-    //     where("name", "==", "Ethereum")
-    // );
-
-    // const tokens = await getDocs(queryStatement);
-
     let tokens = await database
         .collection("coins")
-        // .where("name", "==", "Bitcoin")
-        .where("name", "==", "Ethereum")
+        .where("name", "==", "Bitcoin")
+        // .where("name", "==", "Ethereum")
         .get();
 
     tokens.forEach((doc) => {
         const data = doc.data();
-        // const resultData = {
-        //     price: data.price.daily,
-        // }
+        const prices = data.price.daily;
+        const priceKeys = Object.keys(prices).sort();
+        const priceKeysLength = priceKeys.length;
 
-        // const timestamps = [];
-        // const initValue = data.price.daily.convertUnixTimestampToNumber(key.slice(0, 10));
+        const resultData = {
+            price1DayAgo: prices[priceKeys[priceKeysLength - 1]],
+            price2DayAgo: prices[priceKeys[priceKeysLength - 2]],
+            price3DayAgo: prices[priceKeys[priceKeysLength - 3]],
+            price4DayAgo: prices[priceKeys[priceKeysLength - 4]],
+            price5DayAgo: prices[priceKeys[priceKeysLength - 5]],
+            price6DayAgo: prices[priceKeys[priceKeysLength - 6]],
+            price7DayAgo: prices[priceKeys[priceKeysLength - 7]],
+        }
 
-        for (key in data.price.daily) {
-            tokensList.push({
-                ts: key,
-                tsNumber: convertUnixTimestampToNumber(key.slice(0, 10))
-            });
-        } 
-
-        // tokensList.sort().reverse();
-
-        // tokensList.push(resultData);
+        tokensList.push(resultData);
     });
 
     return tokensList;

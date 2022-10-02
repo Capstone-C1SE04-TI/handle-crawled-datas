@@ -33,6 +33,18 @@ const updateTokensID = async () => {
     });
 }
 
+const updateTokensPrice = async () => {
+    let index = 0;
+
+    const tokens = await database.collection("tokens")
+        .orderBy("id", "asc")
+        .get();
+
+    tokens.forEach((doc) => {
+        doc.ref.update({ price: datas[index++] });
+    });
+}
+
 const removeDocumentField = async () => {
     const users = await database.collection("users")
         .orderBy("userId", "asc")
@@ -45,28 +57,10 @@ const removeDocumentField = async () => {
     });
 }
 
-const testTimestamps = async () => {
-    let timestamps = datas.sort().reverse();
-    
-    let count = 0;
-    let firstDay = Math.floor(timestamps[0] / 1000000);
-
-
-    // timestamps.map((timestamp) => {
-    //     if (count == 7) {
-    //         return;
-    //     }
-    //     else {
-    //         const currentTimestamp = Math.floor(timestamp / 1000000);
-            
-    //         if (currentTimestamp >= firstDay && currentTimestamp <= firstDay ) {
-
-    //         }
-    //     }
-    // })
-
-    // console.log(timestamps);
-    // console.log(init);
-}
-
-module.exports = { writeCoinsInDB, reduceTokensInDB, updateTokensID, removeDocumentField, testTimestamps };
+module.exports = {
+    writeCoinsInDB,
+    reduceTokensInDB,
+    updateTokensID,
+    updateTokensPrice,
+    removeDocumentField
+};
