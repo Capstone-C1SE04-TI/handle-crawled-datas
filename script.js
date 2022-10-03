@@ -2,18 +2,19 @@ const {
     getListOfCoins,
     getListOfTokens
 } = require("./features/read-and-handle");
-const { writeCoinsInDB,
+const {
+    writeCoinsInDB,
     reduceTokensInDB,
     updateTokensID,
-    removeDocumentField,
-    testTimestamps
+    updateTokensDailyPrice,
+    removeDocumentField
 } = require("./features/write");
 
 const runScript = async () => {
     // Step 1: Read & Handle datas
-    const data = await getListOfTokens();
+    // const data = await getListOfTokens();
 
-    // Step 2: Save above datas in temp file
+    // // Step 2: Save above datas in temp file
     // require('fs').writeFile(
     //     './db.json',
     //     JSON.stringify(data),
@@ -25,7 +26,7 @@ const runScript = async () => {
     // );
 
     // Step 3: Write handled datas into DB
-    // await writeCoinsInDB();
+    await updateTokensDailyPrice();
 
     // [Optional]
     // await reduceTokensInDB();

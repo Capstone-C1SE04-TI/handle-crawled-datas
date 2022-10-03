@@ -33,15 +33,14 @@ const updateTokensID = async () => {
     });
 }
 
-const updateTokensPrice = async () => {
-    let index = 0;
-
+const updateTokensDailyPrice = async () => {
     const tokens = await database.collection("tokens")
-        .orderBy("id", "asc")
+        // .where("name", "==", "Bitcoin")
+        .where("name", "==", "Ethereum")
         .get();
 
     tokens.forEach((doc) => {
-        doc.ref.update({ price: datas[index++] });
+        doc.ref.update({ price: datas[0] });
     });
 }
 
@@ -61,6 +60,6 @@ module.exports = {
     writeCoinsInDB,
     reduceTokensInDB,
     updateTokensID,
-    updateTokensPrice,
+    updateTokensDailyPrice,
     removeDocumentField
 };

@@ -5,8 +5,8 @@ const serviceAccountMain = require("./service-account-Capstone-C1SE04-TI-Main.js
 const serviceAccountCrawl = require("./service-account-Capstone-C1SE04-TI-Crawl.json");
 
 initializeApp({
-    // credential: cert(serviceAccountMain),
-    credential: cert(serviceAccountCrawl),
+    credential: cert(serviceAccountMain),
+    // credential: cert(serviceAccountCrawl),
 });
 
 const database = getFirestore();

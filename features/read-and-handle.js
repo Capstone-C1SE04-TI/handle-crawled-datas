@@ -40,25 +40,12 @@ const getListOfTokens = async () => {
     let tokensList = [];
     let tokens = await database
         .collection("coins")
-        .where("name", "==", "Bitcoin")
-        // .where("name", "==", "Ethereum")
+        // .where("name", "==", "Bitcoin")
+        .where("name", "==", "Ethereum")
         .get();
 
     tokens.forEach((doc) => {
-        const data = doc.data();
-        const prices = data.price.daily;
-        const priceKeys = Object.keys(prices).sort();
-        const priceKeysLength = priceKeys.length;
-
-        const resultData = {
-            price1DayAgo: prices[priceKeys[priceKeysLength - 1]],
-            price2DayAgo: prices[priceKeys[priceKeysLength - 2]],
-            price3DayAgo: prices[priceKeys[priceKeysLength - 3]],
-            price4DayAgo: prices[priceKeys[priceKeysLength - 4]],
-            price5DayAgo: prices[priceKeys[priceKeysLength - 5]],
-            price6DayAgo: prices[priceKeys[priceKeysLength - 6]],
-            price7DayAgo: prices[priceKeys[priceKeysLength - 7]],
-        }
+        const resultData = doc.data().price.daily;
 
         tokensList.push(resultData);
     });
