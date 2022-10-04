@@ -1,5 +1,11 @@
 const database = require("../configs/connect-database");
-const { query, collection, where, getDocs, getFirestore } = require("firebase/firestore");
+const {
+    query,
+    collection,
+    where,
+    getDocs,
+    getFirestore,
+} = require("firebase/firestore");
 const { convertUnixTimestampToNumber } = require("../helpers");
 
 const getListOfCoins = async () => {
@@ -24,33 +30,54 @@ const getListOfCoins = async () => {
                 price: data.quote.USD.price,
                 percentChange24h: data.quote.USD.percent_change_24h,
                 percentChange7d: data.quote.USD.percent_change_7d,
-                volume24h: data.quote.USD.volume_24h
+                volume24h: data.quote.USD.volume_24h,
             },
             marketCap: data.quote.USD.market_cap,
-            circulatingSupply: data.circulating_supply
-        }
+            circulatingSupply: data.circulating_supply,
+        };
 
         coinsList.push(resultData);
     });
 
     return coinsList;
-}
+};
 
 const getListOfTokens = async () => {
     let tokensList = [];
     let tokens = await database
         .collection("coins")
-        // .where("name", "==", "Bitcoin")
-        .where("name", "==", "Ethereum")
+        .where("name", "==", "Bitcoin")
+        // .where("name", "==", "Ethereum")
         .get();
 
     tokens.forEach((doc) => {
-        const resultData = doc.data().price.daily;
+        // const resultData = {};
+        const resultData = [];
+        const dates = [
+            20220930, 20220929, 20220928, 20220927, 20220926, 20220925,
+            20220924,
+        ];
+
+        const prices = doc.data().price.daily;
+        const priceKeys = Object.keys(prices);
+
+        priceKeys.map((priceKey) => {
+            const dmyDay = Math.floor(
+                convertUnixTimestampToNumber(Number(priceKey) / 1000) / 1000000,
+            );
+
+            resultData.push(dmyDay);
+
+            // if (dates.includes(dmyDay)) {
+            //     // resultData[priceKey] = prices[priceKey];
+            //     resultData.push(prices[priceKey]);
+            // }
+        });
 
         tokensList.push(resultData);
     });
 
     return tokensList;
-}
+};
 
 module.exports = { getListOfCoins, getListOfTokens };

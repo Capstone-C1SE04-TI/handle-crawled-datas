@@ -1,40 +1,45 @@
 const database = require("../configs/connect-database");
-const datas = require('../db.json');
+const datas = require("../db.json");
 const { FieldValue } = require("firebase-admin/firestore");
-const { randomFirestoreDocumentId, convertUnixTimestampToNumber } = require("../helpers");
+const {
+    randomFirestoreDocumentId,
+    convertUnixTimestampToNumber,
+} = require("../helpers");
 
 const writeCoinsInDB = async () => {
     datas.forEach(async (data) => {
         const docId = randomFirestoreDocumentId();
         await database.collection("tokens").doc(docId).set(data);
-
     });
-}
+};
 
 const reduceTokensInDB = async () => {
-    const tokens = await database.collection("tokens")
+    const tokens = await database
+        .collection("tokens")
         .orderBy("id", "asc")
         .startAt(61)
         .limit(48)
         .get();
 
     tokens.forEach((token) => {
-        token.ref.delete()
+        token.ref.delete();
     });
-}
+};
 
 const updateTokensID = async () => {
-    const tokens = await database.collection("tokens")
+    const tokens = await database
+        .collection("tokens")
         .orderBy("id", "asc")
         .get();
 
     tokens.forEach((doc) => {
         doc.ref.update({ id: doc.get("id") + 10 });
     });
-}
+};
 
 const updateTokensDailyPrice = async () => {
-    const tokens = await database.collection("tokens")
+    const tokens = await database
+        .collection("tokens")
         // .where("name", "==", "Bitcoin")
         .where("name", "==", "Ethereum")
         .get();
@@ -42,10 +47,11 @@ const updateTokensDailyPrice = async () => {
     tokens.forEach((doc) => {
         doc.ref.update({ price: datas[0] });
     });
-}
+};
 
 const removeDocumentField = async () => {
-    const users = await database.collection("users")
+    const users = await database
+        .collection("users")
         .orderBy("userId", "asc")
         .startAt(1)
         .limit(30)
@@ -54,12 +60,12 @@ const removeDocumentField = async () => {
     users.forEach((doc) => {
         doc.ref.update({ userId: FieldValue.delete() });
     });
-}
+};
 
 module.exports = {
     writeCoinsInDB,
     reduceTokensInDB,
     updateTokensID,
     updateTokensDailyPrice,
-    removeDocumentField
+    removeDocumentField,
 };
