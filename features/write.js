@@ -1,5 +1,6 @@
 const database = require("../configs/connect-database");
 const datas = require("../db.json");
+const coinsDatas = require("../db_coins.json");
 const { FieldValue } = require("firebase-admin/firestore");
 const {
     randomFirestoreDocumentId,
@@ -49,6 +50,21 @@ const updateTokensDailyPrice = async () => {
     });
 };
 
+const updateTokensFields = async () => {
+    const tokens = await database
+        .collection("tokens")
+        .orderBy("id", "asc")
+        .startAt(1)
+        .limit(10)
+        .get();
+
+    let id = 0;
+
+    tokens.forEach((doc) => {
+        doc.ref.update(coinsDatas[id++]);
+    });
+};
+
 const removeDocumentField = async () => {
     const users = await database
         .collection("users")
@@ -67,5 +83,6 @@ module.exports = {
     reduceTokensInDB,
     updateTokensID,
     updateTokensDailyPrice,
+    updateTokensFields,
     removeDocumentField,
 };
