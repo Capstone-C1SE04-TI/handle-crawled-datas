@@ -1,6 +1,9 @@
 const database = require("../configs/connect-database");
-const datas = require("../db.json");
-const coinsDatas = require("../db_coins.json");
+const datas = require("../db/db.json");
+const coinsDatas = require("../db/db_coins.json");
+const sharksDatas = require("../db/db_sharks.json");
+const tagsDatas = require("../db/db_tags.json");
+
 const { FieldValue } = require("firebase-admin/firestore");
 const {
     randomFirestoreDocumentId,
@@ -11,6 +14,20 @@ const writeCoinsInDB = async () => {
     datas.forEach(async (data) => {
         const docId = randomFirestoreDocumentId();
         await database.collection("tokens").doc(docId).set(data);
+    });
+};
+
+const writeSharksInDB = async () => {
+    sharksDatas.forEach(async (data) => {
+        const docId = randomFirestoreDocumentId();
+        await database.collection("sharks").doc(docId).set(data);
+    });
+};
+
+const writeTagsInDB = async () => {
+    tagsDatas.forEach(async (data) => {
+        const docId = randomFirestoreDocumentId();
+        await database.collection("tags").doc(docId).set(data);
     });
 };
 
@@ -80,6 +97,8 @@ const removeDocumentField = async () => {
 
 module.exports = {
     writeCoinsInDB,
+    writeSharksInDB,
+    writeTagsInDB,
     reduceTokensInDB,
     updateTokensID,
     updateTokensDailyPrice,

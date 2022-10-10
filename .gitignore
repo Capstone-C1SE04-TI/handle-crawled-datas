@@ -1,12 +1,15 @@
 /node_modules
-
-.env
+/db
 
 db.json
 db_coins.json
 db_coins_price.json
+db_sharks.json
+db_tags.json
 metadata.json
 schemas.json
+
+.env
 
 service-account-Capstone-C1SE04-TI-Crawl.json
 service-account-Capstone-C1SE04-TI-Main.json
