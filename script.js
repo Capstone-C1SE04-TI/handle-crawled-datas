@@ -29,7 +29,7 @@ const runScript = async () => {
     // );
 
     // Step 3: Write handled datas into DB
-    await writeTagsInDB();
+    // await writeTagsInDB();
 };
 
 runScript();
