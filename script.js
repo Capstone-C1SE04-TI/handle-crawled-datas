@@ -11,6 +11,7 @@ const {
     updateTokensDailyPrice,
     updateTokensFields,
     removeDocumentField,
+    updateCoinId,
 } = require("./features/write");
 
 const runScript = async () => {
@@ -18,18 +19,14 @@ const runScript = async () => {
     // const data = convert();
 
     // Step 2: Save above datas in temp file
-    // require('fs').writeFile(
-    //     './db.json',
-    //     JSON.stringify(data),
-    //     function (err) {
-    //         if (err) {
-    //             console.error(err);
-    //         }
+    // require("fs").writeFile("./db4.json", JSON.stringify(data), function (err) {
+    //     if (err) {
+    //         console.error(err);
     //     }
-    // );
+    // });
 
     // Step 3: Write handled datas into DB
-    // await writeTagsInDB();
+    // await updateCoinId();
 };
 
 runScript();
