@@ -1,7 +1,9 @@
 const database = require("../configs/connect-database");
 const DB = require("../db.json");
+const DB2 = require("../db2.json");
 const datas = require("../db/db.json");
 const metadata = require("../db/metadata.json");
+const metadata_copy = require("../db/metadata_copy.json");
 const coinsDatas = require("../db/db_coins.json");
 const sharksDatas = require("../db/db_sharks.json");
 const tokensDatas = require("../db/db_tokens.json");
@@ -25,7 +27,8 @@ const updateTokensPrices = async () => {
     let id = 0;
 
     tokens.forEach((doc) => {
-        doc.ref.update({ prices: metadata[id++].prices });
+        // doc.ref.update({ prices: FieldValue.delete() });
+        doc.ref.update({ prices: DB2[id++].prices });
     });
 };
 
@@ -177,6 +180,68 @@ const updateTagNames = async () => {
     return tagsNames;
 };
 
+const handleTokensPrices = async () => {
+    let prices = [];
+
+    for (let i = 0; i < 10; i++) {
+        // 1. DAY
+        let days = {};
+
+        Object.keys(metadata[i].prices.hourly).forEach((key) => {
+            const cv = convertUnixTimestampToNumber(key.slice(0, 10));
+            if (Math.floor(cv / 1000000) == 20221009) {
+                days[key] = metadata[i].prices.hourly[`${key}`];
+            }
+        });
+
+        // 2. WEEK
+        let weeks = {};
+        let dates = [
+            20221009, 20221008, 20221007, 20221006, 20221005, 20221004,
+            20221003,
+        ];
+
+        Object.keys(metadata[i].prices.daily).forEach((key) => {
+            const cv = convertUnixTimestampToNumber(key.slice(0, 10));
+            if (dates.includes(Math.floor(cv / 1000000))) {
+                weeks[key] = metadata[i].prices.daily[`${key}`];
+            }
+        });
+
+        // 3. MONTH
+        let months = {};
+
+        Object.keys(metadata[i].prices.daily).forEach((key) => {
+            const cv = convertUnixTimestampToNumber(key.slice(0, 10));
+            if (Math.floor(cv / 100000000) == 202209) {
+                months[key] = metadata[i].prices.daily[`${key}`];
+            }
+        });
+
+        // 4. YEAR
+        let years = {};
+
+        Object.keys(metadata[i].prices.daily).forEach((key) => {
+            const cv = convertUnixTimestampToNumber(key.slice(0, 10));
+            if (Math.floor(cv / 10000000000) == 2022) {
+                years[key] = metadata[i].prices.daily[`${key}`];
+            }
+        });
+
+        // UPDATE DATA
+        prices.push({
+            prices: {
+                day: days,
+                week: weeks,
+                month: months,
+                year: years,
+            },
+        });
+    }
+
+    return prices;
+};
+
 module.exports = {
     writeCoinsInDB,
     writeSharksInDB,
@@ -190,4 +255,5 @@ module.exports = {
     updateTagNames,
     updateMetadata,
     updateTokensPrices,
+    handleTokensPrices,
 };

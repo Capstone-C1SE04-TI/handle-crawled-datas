@@ -2,12 +2,14 @@
 /db
 
 db.json
+db2.json
 db_coins.json
 db_coins_price.json
 db_coins_prices.json
 db_sharks.json
 db_tags.json
 metadata.json
+metadata_copy.json
 test.json
 schemas.json
 
