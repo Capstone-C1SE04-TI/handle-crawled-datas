@@ -1,5 +1,6 @@
 const database = require("../configs/connect-database");
 const DB = require("../db.json");
+const DB1 = require("../db1.json");
 const datas = require("../db/db.json");
 const coinsDatas = require("../db/db_coins.json");
 const sharksDatas = require("../db/db_sharks.json");
@@ -124,6 +125,21 @@ const removeDocumentField = async () => {
     });
 };
 
+const updateTagNames = async () => {
+    const tokens = await database
+        .collection("tokens")
+        .orderBy("id", "asc")
+        .get();
+
+    let tagsNames = [];
+
+    tokens.forEach((doc) => {
+        tagsNames = [...tagsNames, doc.data().tagNames];
+    });
+
+    return tagsNames;
+};
+
 module.exports = {
     writeCoinsInDB,
     writeSharksInDB,
@@ -134,4 +150,5 @@ module.exports = {
     updateTokensFields,
     removeDocumentField,
     updateCoinId,
+    updateTagNames,
 };
