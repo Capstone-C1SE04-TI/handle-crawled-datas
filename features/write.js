@@ -1,7 +1,7 @@
 const database = require("../configs/connect-database");
 const DB = require("../db.json");
-const DB1 = require("../db1.json");
 const datas = require("../db/db.json");
+const metadata = require("../db/metadata.json");
 const coinsDatas = require("../db/db_coins.json");
 const sharksDatas = require("../db/db_sharks.json");
 const tokensDatas = require("../db/db_tokens.json");
@@ -13,6 +13,37 @@ const {
     convertUnixTimestampToNumber,
 } = require("../helpers");
 const _ = require("underscore");
+
+const updateTokensPrices = async () => {
+    const tokens = await database
+        .collection("tokens")
+        .orderBy("id", "asc")
+        .startAt(1)
+        .limit(10)
+        .get();
+
+    let id = 0;
+
+    tokens.forEach((doc) => {
+        doc.ref.update({ prices: metadata[id++].prices });
+    });
+};
+
+const updateMetadata = async () => {
+    let prices = [];
+
+    metadata.forEach(async (data) => {
+        if (Object.entries(data.prices).length !== 0) {
+            prices.push({
+                id: data.id,
+                name: data.name,
+                prices: data.prices,
+            });
+        }
+    });
+
+    return prices;
+};
 
 const writeCoinsInDB = async () => {
     datas.forEach(async (data) => {
@@ -113,15 +144,21 @@ const updateCoinId = async () => {
 };
 
 const removeDocumentField = async () => {
-    const users = await database
-        .collection("users")
-        .orderBy("userId", "asc")
-        .startAt(1)
-        .limit(30)
+    const tokens = await database
+        .collection("tokens")
+        .orderBy("id", "asc")
         .get();
 
-    users.forEach((doc) => {
-        doc.ref.update({ userId: FieldValue.delete() });
+    tokens.forEach((doc) => {
+        doc.ref.update({
+            tagGroups: FieldValue.delete(),
+            tags: FieldValue.delete(),
+            category: FieldValue.delete(),
+            selfReportedCirculatingSupply: FieldValue.delete(),
+            selfReportedMarketCap: FieldValue.delete(),
+            selfReportedTags: FieldValue.delete(),
+            description: FieldValue.delete(),
+        });
     });
 };
 
@@ -151,4 +188,6 @@ module.exports = {
     removeDocumentField,
     updateCoinId,
     updateTagNames,
+    updateMetadata,
+    updateTokensPrices,
 };
