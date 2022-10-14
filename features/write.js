@@ -32,6 +32,22 @@ const updateTokensPrices = async () => {
     });
 };
 
+const updateTokensPriceLast1Day = async () => {
+    const tokens = await database
+        .collection("tokens")
+        .orderBy("id", "asc")
+        .startAt(1)
+        .limit(10)
+        .get();
+
+    let id = 0;
+
+    tokens.forEach((doc) => {
+        // doc.ref.update({ prices: FieldValue.delete() });
+        doc.ref.update({ prices: DB2[id++].prices });
+    });
+};
+
 const updateMetadata = async () => {
     let prices = [];
 
@@ -254,6 +270,7 @@ module.exports = {
     updateCoinId,
     updateTagNames,
     updateMetadata,
+    updateTokensPriceLast1Day,
     updateTokensPrices,
     handleTokensPrices,
 };

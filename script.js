@@ -16,6 +16,7 @@ const {
     updateMetadata,
     updateTokensPrices,
     handleTokensPrices,
+    updateTokensPriceLast1Day,
 } = require("./features/write");
 
 const runScript = async () => {
@@ -30,7 +31,7 @@ const runScript = async () => {
     // });
 
     // Step 3: Write handled datas into DB
-    // await updateTokensPrices();
+    // await updateTokensPriceLast1Day();
 };
 
 runScript();
