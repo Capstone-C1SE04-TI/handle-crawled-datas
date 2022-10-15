@@ -24,14 +24,14 @@ const runScript = async () => {
     // const data = await handleTokensPrices();
 
     // // Step 2: Save above datas in temp file
-    // require("fs").writeFile("./db2.json", JSON.stringify(data), function (err) {
+    // require("fs").writeFile("./db3.json", JSON.stringify(data), function (err) {
     //     if (err) {
     //         console.error(err);
     //     }
     // });
 
     // Step 3: Write handled datas into DB
-    // await updateTokensPriceLast1Day();
+    // await updateTokensPrices();
 };
 
 runScript();
