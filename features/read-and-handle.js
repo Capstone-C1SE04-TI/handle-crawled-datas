@@ -80,4 +80,19 @@ const getListOfTokens = async () => {
     return tokensList;
 };
 
-module.exports = { getListOfCoins, getListOfTokens };
+const exportCollection = async (collectionName) => {
+    let datasList = [];
+    let datas = await database
+        .collection(collectionName)
+        .orderBy("id", "asc")
+        .get();
+
+    datas.forEach((doc) => {
+        const data = doc.data();
+        datasList.push(data);
+    });
+
+    return datasList;
+};
+
+module.exports = { getListOfCoins, getListOfTokens, exportCollection };

@@ -1,7 +1,9 @@
 const database = require("../configs/connect-database");
 const DB = require("../db.json");
-const DB2 = require("../db2.json");
-const DB3 = require("../db3.json");
+// const DB2 = require("../db2.json");
+// const DB3 = require("../db3.json");
+const DB2 = [];
+const DB3 = [];
 const datas = require("../db/db.json");
 const metadata = require("../db/metadata.json");
 const metadata_copy = require("../db/metadata_copy.json");
