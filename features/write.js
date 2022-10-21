@@ -125,19 +125,27 @@ const updateTokensDailyPrice = async () => {
 };
 
 const updateTokensFields = async () => {
-    const tokens = await database
-        .collection("tokens")
-        .orderBy("ethId", "asc")
-        .get();
+    // const tokens = await database
+    //     .collection("tokens")
+    //     .orderBy("ethId", "asc")
+    //     .get();
 
-    let id = 0;
+    // let id = 0;
 
-    tokens.forEach((doc) => {
-        if (doc.data().ethId == coinsDatas[id].ethId) {
-            doc.ref.update(coinsDatas[id++]);
-        } else {
-            id++;
-        }
+    // tokens.forEach((doc) => {
+    //     if (doc.data().ethId == coinsDatas[id].ethId) {
+    //         doc.ref.update(coinsDatas[id++]);
+    //     } else {
+    //         id++;
+    //     }
+    // });
+
+    const users = await database.collection("users").get();
+
+    users.forEach((doc) => {
+        doc.ref.update({
+            avatar: "https://res.cloudinary.com/dhzbsq7fj/image/upload/v1643101647/avatardefault_92824_aifry9.png",
+        });
     });
 };
 
