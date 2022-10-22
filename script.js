@@ -50,7 +50,7 @@ const runScript = async () => {
     // });
 
     // Step 3: Write handled datas into DB
-    // await updateTokensFields();
+    await updateTokensFields();
 };
 
 runScript();
