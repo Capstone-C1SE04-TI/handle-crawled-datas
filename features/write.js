@@ -143,7 +143,10 @@ const updateTokensFields = async () => {
     const users = await database.collection("users").get();
 
     users.forEach((doc) => {
-        doc.ref.update({ website: "" });
+        doc.ref.update({
+            website:
+                "https://res.cloudinary.com/dhzbsq7fj/image/upload/v1643101647/avatardefault_92824_aifry9.png",
+        });
     });
 };
 
