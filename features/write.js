@@ -4,6 +4,7 @@ const DB = require("../db.json");
 // const DB3 = require("../db3.json");
 const DB2 = [];
 const DB3 = [];
+const DB5 = require("../db5.json");
 const datas = require("../db/db.json");
 const metadata = require("../db/metadata.json");
 const metadata_copy = require("../db/metadata_copy.json");
@@ -140,13 +141,24 @@ const updateTokensFields = async () => {
     //     }
     // });
 
-    const users = await database.collection("users").get();
+    // const users = await database.collection("users").get();
 
-    users.forEach((doc) => {
-        doc.ref.update({
-            website: "",
-            avatar: "https://res.cloudinary.com/dhzbsq7fj/image/upload/v1643101647/avatardefault_92824_aifry9.png",
-        });
+    // users.forEach((doc) => {
+    //     doc.ref.update({
+    //         website: "",
+    //         avatar: "https://res.cloudinary.com/dhzbsq7fj/image/upload/v1643101647/avatardefault_92824_aifry9.png",
+    //     });
+    // });
+
+    const tokens = await database
+        .collection("tokens")
+        .orderBy("id", "asc")
+        .get();
+
+    let id = 0;
+
+    tokens.forEach((doc) => {
+        doc.ref.update(DB5[id++]);
     });
 };
 
