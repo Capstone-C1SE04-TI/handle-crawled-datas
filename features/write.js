@@ -144,8 +144,8 @@ const updateTokensFields = async () => {
 
     users.forEach((doc) => {
         doc.ref.update({
-            website:
-                "https://res.cloudinary.com/dhzbsq7fj/image/upload/v1643101647/avatardefault_92824_aifry9.png",
+            website: "",
+            avatar: "https://res.cloudinary.com/dhzbsq7fj/image/upload/v1643101647/avatardefault_92824_aifry9.png",
         });
     });
 };
