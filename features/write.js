@@ -141,25 +141,24 @@ const updateTokensFields = async () => {
     //     }
     // });
 
-    // const users = await database.collection("users").get();
+    const users = await database.collection("users").get();
 
-    // users.forEach((doc) => {
-    //     doc.ref.update({
-    //         website: "",
-    //         avatar: "https://res.cloudinary.com/dhzbsq7fj/image/upload/v1643101647/avatardefault_92824_aifry9.png",
-    //     });
-    // });
-
-    const tokens = await database
-        .collection("tokens")
-        .orderBy("id", "asc")
-        .get();
-
-    let id = 0;
-
-    tokens.forEach((doc) => {
-        doc.ref.update(DB5[id++]);
+    users.forEach((doc) => {
+        doc.ref.update({
+            fullName: "",
+        });
     });
+
+    // const tokens = await database
+    //     .collection("tokens")
+    //     .orderBy("id", "asc")
+    //     .get();
+
+    // let id = 0;
+
+    // tokens.forEach((doc) => {
+    //     doc.ref.update(DB5[id++]);
+    // });
 };
 
 const updateCoinId = async () => {
