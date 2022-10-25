@@ -5,6 +5,7 @@ const {
 } = require("./features/read-and-handle");
 const {
     writeCoinsInDB,
+    writeUsersInDB,
     writeSharksInDB,
     writeTagsInDB,
     reduceTokensInDB,
@@ -27,7 +28,7 @@ const runScript = async () => {
     // const data3 = await exportCollection("tags");
     // const data4 = await exportCollection("sharks");
 
-    // // Step 2: Save above datas in temp file
+    // Step 2: Save above datas in temp file
     // require("fs").writeFile("./db1.json", JSON.stringify(data1), (err) => {
     //     if (err) {
     //         console.error(err);
@@ -50,7 +51,7 @@ const runScript = async () => {
     // });
 
     // Step 3: Write handled datas into DB
-    await updateTokensFields();
+    await writeUsersInDB();
 };
 
 runScript();

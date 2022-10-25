@@ -1,5 +1,6 @@
 const database = require("../configs/connect-database");
 const DB = require("../db.json");
+const DB1 = require("../db1.json");
 // const DB2 = require("../db2.json");
 // const DB3 = require("../db3.json");
 const DB2 = [];
@@ -75,6 +76,13 @@ const writeCoinsInDB = async () => {
     });
 };
 
+const writeUsersInDB = async () => {
+    DB1.forEach(async (data) => {
+        const docId = randomFirestoreDocumentId();
+        await database.collection("users").doc(docId).set(data);
+    });
+};
+
 const writeSharksInDB = async () => {
     sharksDatas.forEach(async (data) => {
         const docId = randomFirestoreDocumentId();
@@ -130,9 +138,7 @@ const updateTokensFields = async () => {
     //     .collection("tokens")
     //     .orderBy("ethId", "asc")
     //     .get();
-
     // let id = 0;
-
     // tokens.forEach((doc) => {
     //     if (doc.data().ethId == coinsDatas[id].ethId) {
     //         doc.ref.update(coinsDatas[id++]);
@@ -140,22 +146,17 @@ const updateTokensFields = async () => {
     //         id++;
     //     }
     // });
-
-    const users = await database.collection("users").get();
-
-    users.forEach((doc) => {
-        doc.ref.update({
-            fullName: "",
-        });
-    });
-
+    // const users = await database.collection("users").get();
+    // users.forEach((doc) => {
+    //     doc.ref.update({
+    //         userId: doc.data().id,
+    //     });
+    // });
     // const tokens = await database
     //     .collection("tokens")
     //     .orderBy("id", "asc")
     //     .get();
-
     // let id = 0;
-
     // tokens.forEach((doc) => {
     //     doc.ref.update(DB5[id++]);
     // });
@@ -294,6 +295,7 @@ const handleTokensPrices = async () => {
 
 module.exports = {
     writeCoinsInDB,
+    writeUsersInDB,
     writeSharksInDB,
     writeTagsInDB,
     reduceTokensInDB,
