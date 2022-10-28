@@ -1,7 +1,6 @@
 const database = require("../configs/connect-database");
 const DB = require("../db.json");
 const DB1 = require("../db1.json");
-const cmcRanks = require("../cmcRanks.json");
 // const DB2 = require("../db2.json");
 // const DB3 = require("../db3.json");
 const DB2 = [];
@@ -135,22 +134,31 @@ const updateTokensDailyPrice = async () => {
 };
 
 const updateTokensFields = async () => {
-    const tokens = await database
-        .collection("tokens")
+    // const tokens = await database
+    //     .collection("tokens")
+    //     .orderBy("id", "asc")
+    //     .get();
+
+    // tokens.forEach((doc) => {
+    //     let rank;
+
+    //     cmcRanks.forEach((cmcRank) => {
+    //         if (cmcRank.symbol === doc.data().symbol) {
+    //             rank = cmcRank.cmc_rank;
+    //             return;
+    //         }
+    //     });
+
+    //     doc.ref.update({ cmcRank: rank });
+    // });
+
+    const sharks = await database
+        .collection("sharks")
         .orderBy("id", "asc")
         .get();
 
-    tokens.forEach((doc) => {
-        let rank;
-
-        cmcRanks.forEach((cmcRank) => {
-            if (cmcRank.symbol === doc.data().symbol) {
-                rank = cmcRank.cmc_rank;
-                return;
-            }
-        });
-
-        doc.ref.update({ cmcRank: rank });
+    sharks.forEach((doc) => {
+        doc.ref.update({ percent24h: "0%" });
     });
 };
 
