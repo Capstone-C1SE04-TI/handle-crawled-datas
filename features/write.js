@@ -1,6 +1,7 @@
 const database = require("../configs/connect-database");
 const DB = require("../db.json");
 const DB1 = require("../db1.json");
+const cmcRanks = require("../cmcRanks.json");
 // const DB2 = require("../db2.json");
 // const DB3 = require("../db3.json");
 const DB2 = [];
@@ -134,32 +135,23 @@ const updateTokensDailyPrice = async () => {
 };
 
 const updateTokensFields = async () => {
-    // const tokens = await database
-    //     .collection("tokens")
-    //     .orderBy("ethId", "asc")
-    //     .get();
-    // let id = 0;
-    // tokens.forEach((doc) => {
-    //     if (doc.data().ethId == coinsDatas[id].ethId) {
-    //         doc.ref.update(coinsDatas[id++]);
-    //     } else {
-    //         id++;
-    //     }
-    // });
-    // const users = await database.collection("users").get();
-    // users.forEach((doc) => {
-    //     doc.ref.update({
-    //         userId: doc.data().id,
-    //     });
-    // });
-    // const tokens = await database
-    //     .collection("tokens")
-    //     .orderBy("id", "asc")
-    //     .get();
-    // let id = 0;
-    // tokens.forEach((doc) => {
-    //     doc.ref.update(DB5[id++]);
-    // });
+    const tokens = await database
+        .collection("tokens")
+        .orderBy("id", "asc")
+        .get();
+
+    tokens.forEach((doc) => {
+        let rank;
+
+        cmcRanks.forEach((cmcRank) => {
+            if (cmcRank.symbol === doc.data().symbol) {
+                rank = cmcRank.cmc_rank;
+                return;
+            }
+        });
+
+        doc.ref.update({ cmcRank: rank });
+    });
 };
 
 const updateCoinId = async () => {

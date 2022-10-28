@@ -27,7 +27,7 @@ const runScript = async () => {
     // const data2 = await exportCollection("tokens");
     // const data3 = await exportCollection("tags");
     // const data4 = await exportCollection("sharks");
-    const data5 = await exportCollection("admins");
+    // const data5 = await exportCollection("admins");
 
     // Step 2: Save above datas in temp file
     // require("fs").writeFile("./db1.json", JSON.stringify(data1), (err) => {
@@ -50,14 +50,14 @@ const runScript = async () => {
     //         console.error(err);
     //     }
     // });
-    require("fs").writeFile("./db5.json", JSON.stringify(data5), (err) => {
-        if (err) {
-            console.error(err);
-        }
-    });
+    // require("fs").writeFile("./db5.json", JSON.stringify(data5), (err) => {
+    //     if (err) {
+    //         console.error(err);
+    //     }
+    // });
 
     // Step 3: Write handled datas into DB
-    // await writeUsersInDB();
+    // await updateTokensFields();
 };
 
 runScript();
