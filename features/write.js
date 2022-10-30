@@ -2,6 +2,7 @@ const database = require("../configs/connect-database");
 const DB = require("../db.json");
 const DB1 = require("../db1.json");
 const originalPrices = require("../metadatas.json");
+const tokensDB = require("../tokens.json");
 // const DB2 = require("../db2.json");
 // const DB3 = require("../db3.json");
 const DB2 = [];
@@ -140,17 +141,34 @@ const updateTokensFields = async () => {
         .orderBy("id", "asc")
         .get();
 
-    tokens.forEach((doc) => {
-        let prices;
+    // tokens.forEach((doc) => {
+    //     let prices;
 
-        originalPrices.forEach((originalPrice) => {
-            if (originalPrice.symbol === doc.data().symbol) {
-                prices = originalPrice.prices;
+    //     originalPrices.forEach((originalPrice) => {
+    //         if (originalPrice.symbol === doc.data().symbol) {
+    //             prices = originalPrice.prices;
+    //             return;
+    //         }
+    //     });
+
+    //     doc.ref.update({ originalPrices: prices || {} });
+    // });
+
+    tokens.forEach((doc) => {
+        let totalSupply, maxSupply;
+
+        tokensDB.forEach((token) => {
+            if (token.symbol === doc.data().symbol) {
+                totalSupply = token.totalSupply;
+                maxSupply = token.maxSupply;
                 return;
             }
         });
 
-        doc.ref.update({ originalPrices: prices || {} });
+        doc.ref.update({
+            totalSupply: totalSupply || 0,
+            maxSupply: maxSupply || 0,
+        });
     });
 };
 

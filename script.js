@@ -24,7 +24,7 @@ const {
 const runScript = async () => {
     // Step 1: Read & Handle datas
     // const data1 = await exportCollection("users");
-    // const data2 = await exportCollection("tokens");
+    const data2 = await exportCollection("tokens");
     // const data3 = await exportCollection("tags");
     // const data4 = await exportCollection("sharks");
     // const data5 = await exportCollection("admins");
@@ -35,11 +35,11 @@ const runScript = async () => {
     //         console.error(err);
     //     }
     // });
-    // require("fs").writeFile("./db2.json", JSON.stringify(data2), (err) => {
-    //     if (err) {
-    //         console.error(err);
-    //     }
-    // });
+    require("fs").writeFile("./db2.json", JSON.stringify(data2), (err) => {
+        if (err) {
+            console.error(err);
+        }
+    });
     // require("fs").writeFile("./db3.json", JSON.stringify(data3), (err) => {
     //     if (err) {
     //         console.error(err);
