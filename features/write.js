@@ -1,17 +1,11 @@
 const database = require("../configs/connect-database");
 const DB = require("../db.json");
 const DB1 = require("../db1.json");
-const originalPrices = require("../metadatas.json");
-const tokensDB = require("../tokens.json");
-// const DB2 = require("../db2.json");
-// const DB3 = require("../db3.json");
+const investorsDB = require("../investors.json");
 const DB2 = [];
 const DB3 = [];
-const DB5 = require("../db5.json");
 const datas = require("../db/db.json");
 const metadata = require("../db/metadata.json");
-const metadata_copy = require("../db/metadata_copy.json");
-const coinsDatas = require("../db/db_coins.json");
 const sharksDatas = require("../db/db_sharks.json");
 const tokensDatas = require("../db/db_tokens.json");
 const tagsDatas = require("../db/db_tags.json");
@@ -136,38 +130,23 @@ const updateTokensDailyPrice = async () => {
 };
 
 const updateTokensFields = async () => {
-    const tokens = await database
-        .collection("tokens")
+    const sharks = await database
+        .collection("sharks")
         .orderBy("id", "asc")
         .get();
 
-    // tokens.forEach((doc) => {
-    //     let prices;
+    sharks.forEach((doc) => {
+        let percent24h;
 
-    //     originalPrices.forEach((originalPrice) => {
-    //         if (originalPrice.symbol === doc.data().symbol) {
-    //             prices = originalPrice.prices;
-    //             return;
-    //         }
-    //     });
-
-    //     doc.ref.update({ originalPrices: prices || {} });
-    // });
-
-    tokens.forEach((doc) => {
-        let totalSupply, maxSupply;
-
-        tokensDB.forEach((token) => {
-            if (token.symbol === doc.data().symbol) {
-                totalSupply = token.totalSupply;
-                maxSupply = token.maxSupply;
+        investorsDB.forEach((investor) => {
+            if (investor.walletAddress === doc.data().walletAddress) {
+                percent24h = investor.percent24h;
                 return;
             }
         });
 
         doc.ref.update({
-            totalSupply: totalSupply || 0,
-            maxSupply: maxSupply || 0,
+            percent24h: percent24h || 0,
         });
     });
 };
