@@ -19,7 +19,9 @@ const {
     updateTokensPrices,
     handleTokensPrices,
     updateTokensPriceLast1Day,
+    updateTransactionHistoryShark
 } = require("./features/write");
+const { convertUnixTimestampToNumber } = require("./helpers");
 
 const runScript = async () => {
     // Step 1: Read & Handle datas
@@ -51,7 +53,9 @@ const runScript = async () => {
     // });
 
     // Step 3: Write handled datas into DB
-    await writeUsersInDB();
+    // await writeUsersInDB();
+    // await updateTransactionHistoryShark();
+    console.log(convertUnixTimestampToNumber(1657512106566));
 };
 
 runScript();

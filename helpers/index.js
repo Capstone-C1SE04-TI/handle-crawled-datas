@@ -10,6 +10,7 @@ function randomFirestoreDocumentId() {
 }
 
 function convertUnixTimestampToNumber(unixTimestamp) {
+    unixTimestamp = unixTimestamp / 1000;
     const date = new Date(unixTimestamp * 1000);
 
     const year =
@@ -38,5 +39,6 @@ function convertUnixTimestampToNumber(unixTimestamp) {
 
     return formattedTimeNumber;
 }
+
 
 module.exports = { randomFirestoreDocumentId, convertUnixTimestampToNumber };

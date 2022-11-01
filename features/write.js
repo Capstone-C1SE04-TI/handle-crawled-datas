@@ -1,20 +1,26 @@
 const database = require("../configs/connect-database");
-const DB = require("../db.json");
-const DB1 = require("../db1.json");
+// const DB = require("../db.json");
+// const DB1 = require("../db1.json");
 // const DB2 = require("../db2.json");
 // const DB3 = require("../db3.json");
-const DB2 = [];
-const DB3 = [];
-const DB5 = require("../db5.json");
-const datas = require("../db/db.json");
-const metadata = require("../db/metadata.json");
-const metadata_copy = require("../db/metadata_copy.json");
-const coinsDatas = require("../db/db_coins.json");
-const sharksDatas = require("../db/db_sharks.json");
-const tokensDatas = require("../db/db_tokens.json");
-const tagsDatas = require("../db/db_tags.json");
+// const DB2 = [];
+// const DB3 = [];
+// const DB5 = require("../db5.json");
+// const datas = require("../db/db.json");
+// const metadata = require("../db/metadata.json");
+// const metadata_copy = require("../db/metadata_copy.json");
+// const coinsDatas = require("../db/db_coins.json");
+// const sharksDatas = require("../db/db_sharks.json");
+// const tokensDatas = require("../db/db_tokens.json");
+// const tagsDatas = require("../db/db_tags.json");
 
-const { FieldValue } = require("firebase-admin/firestore");
+const transactionSharkDatas = require("../../../investors.json");
+
+const {
+    FieldValue,
+    Transaction,
+    Timestamp,
+} = require("firebase-admin/firestore");
 const {
     randomFirestoreDocumentId,
     convertUnixTimestampToNumber,
@@ -220,6 +226,52 @@ const updateTagNames = async () => {
     return tagsNames;
 };
 
+const updateTransactionHistoryShark = async () => {
+    // const sharks = await database
+    //     .collection("sharks")
+    //     .orderBy("id", "asc")
+    //     .get();
+
+    console.log(convertUnixTimestampToNumber(1657512106566));
+    // sharks.forEach((shark) => {
+    //     let data = transactionSharkDatas.find((transaction) => {
+    //         return shark.data()["walletAddress"] === transaction["_id"];
+    //     });
+    //     if (data && data["is_shark"]) {
+    //         const transactions = data["TXs"].map((rawTransaction) => {
+    //             const stringTimestamp = String(convertUnixTimestampToNumber(rawTransaction['timeStamp']));
+
+    //             return {
+    //                 blockNumber: rawTransaction['blockNumber'],
+    //                 timeStamp: stringTimestamp,
+    //                 hash: rawTransaction['hash'],
+    //                 nonce: rawTransaction['nonce'],
+    //                 blockHash: rawTransaction['blockHash'],
+    //                 from: rawTransaction['from'],
+    //                 contractAddress: rawTransaction['contractAddress'],
+    //                 to: rawTransaction['to'],
+    //                 value: rawTransaction['value'],
+    //                 tokenName: rawTransaction['tokenName'],
+    //                 tokenSymbol: rawTransaction['tokenSymbol'],
+    //                 tokenDecimal: rawTransaction['tokenDecimal'],
+    //                 transactionIndex: rawTransaction['transactionIndex'],
+    //                 gas: rawTransaction['gas'],
+    //                 gasPrice: rawTransaction['gasPrice'], 
+    //                 gasUsed: rawTransaction['gasUsed'],
+    //                 cumulativeGasUsed: rawTransaction['cumulativeGasUsed'],
+    //                 input: rawTransaction['input'],
+    //                 confirmations: rawTransaction['confirmations'],
+    //             };
+    //         });
+
+    //         shark.ref.update({transactionsHistory: transactions});
+
+    //     }
+    // });
+
+  
+};
+
 const handleTokensPrices = async () => {
     let prices = [];
 
@@ -309,4 +361,5 @@ module.exports = {
     updateTokensPriceLast1Day,
     updateTokensPrices,
     handleTokensPrices,
+    updateTransactionHistoryShark,
 };
