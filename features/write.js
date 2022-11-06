@@ -1,7 +1,6 @@
 const database = require("../configs/connect-database");
 const DB = require("../db.json");
 const DB1 = require("../db1.json");
-const investorsDB = require("../investors.json");
 const DB2 = [];
 const DB3 = [];
 const datas = require("../db/db.json");
@@ -130,23 +129,14 @@ const updateTokensDailyPrice = async () => {
 };
 
 const updateTokensFields = async () => {
-    const sharks = await database
-        .collection("sharks")
-        .orderBy("id", "asc")
+    const users = await database
+        .collection("users")
+        .orderBy("userId", "asc")
         .get();
 
-    sharks.forEach((doc) => {
-        let percent24h;
-
-        investorsDB.forEach((investor) => {
-            if (investor.walletAddress === doc.data().walletAddress) {
-                percent24h = investor.percent24h;
-                return;
-            }
-        });
-
+    users.forEach((doc) => {
         doc.ref.update({
-            percent24h: percent24h || 0,
+            id: doc.data().userId,
         });
     });
 };
