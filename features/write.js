@@ -136,7 +136,7 @@ const updateTokensFields = async () => {
 
     users.forEach((doc) => {
         doc.ref.update({
-            id: doc.data().userId,
+            premiumAccount: false,
         });
     });
 };
