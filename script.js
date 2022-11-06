@@ -19,6 +19,7 @@ const {
     updateTokensPrices,
     handleTokensPrices,
     updateTokensPriceLast1Day,
+    handleDetailChartTransaction,
 } = require("./features/write");
 
 const runScript = async () => {

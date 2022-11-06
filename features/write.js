@@ -8,6 +8,7 @@ const metadata = require("../db/metadata.json");
 const sharksDatas = require("../db/db_sharks.json");
 const tokensDatas = require("../db/db_tokens.json");
 const tagsDatas = require("../db/db_tags.json");
+const sharksDB = require("../sharks.json");
 
 const { FieldValue } = require("firebase-admin/firestore");
 const {
@@ -129,14 +130,16 @@ const updateTokensDailyPrice = async () => {
 };
 
 const updateTokensFields = async () => {
-    const users = await database
-        .collection("users")
-        .orderBy("userId", "asc")
+    const sharks = await database
+        .collection("sharks")
+        .orderBy("id", "asc")
         .get();
 
-    users.forEach((doc) => {
+    let id = 0;
+
+    sharks.forEach((doc) => {
         doc.ref.update({
-            premiumAccount: false,
+            historyDatas: sharksDB[id++].historyDatas,
         });
     });
 };
@@ -272,6 +275,42 @@ const handleTokensPrices = async () => {
     return prices;
 };
 
+const handleDetailChartTransaction = async () => {
+    let sharks = [];
+    let shark = {};
+
+    investors.forEach((investor) => {
+        const sharkWallet = investor._id;
+        let historyDatas = [];
+        const symbols = [...new Set(investor.TXs.map((TX) => TX.tokenSymbol))];
+
+        symbols.map((symbol) => {
+            let historyData = {};
+
+            investor.TXs.forEach((TX) => {
+                if (TX.tokenSymbol === symbol) {
+                    historyData[TX.timeStamp] =
+                        sharkWallet === TX.from ? false : true;
+                }
+            });
+
+            historyDatas.push({
+                coinSymbol: symbol,
+                historyData: historyData,
+            });
+        });
+
+        shark = {
+            walletAddress: sharkWallet,
+            historyDatas: historyDatas,
+        };
+
+        sharks.push(shark);
+    });
+
+    return sharks;
+};
+
 module.exports = {
     writeCoinsInDB,
     writeUsersInDB,
@@ -288,4 +327,5 @@ module.exports = {
     updateTokensPriceLast1Day,
     updateTokensPrices,
     handleTokensPrices,
+    handleDetailChartTransaction,
 };

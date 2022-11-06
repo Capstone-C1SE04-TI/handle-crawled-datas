@@ -17,6 +17,8 @@ metadatas.json
 metadata_copy.json
 test.json
 schemas.json
+investors.json
+sharks.json
 
 .env
 
