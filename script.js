@@ -1,3 +1,4 @@
+const cron = require("node-cron");
 const {
     getListOfCoins,
     getListOfTokens,
@@ -29,7 +30,6 @@ const runScript = async () => {
     // const data3 = await exportCollection("tags");
     // const data4 = await exportCollection("sharks");
     // const data5 = await exportCollection("admins");
-
     // Step 2: Save above datas in temp file
     // require("fs").writeFile("./db1.json", JSON.stringify(data1), (err) => {
     //     if (err) {
@@ -56,9 +56,19 @@ const runScript = async () => {
     //         console.error(err);
     //     }
     // });
-
     // Step 3: Write handled datas into DB
-    await updateTokensFields();
+    // await updateTokensFields();
+
+    // CRONJOB - AUTOMATION EXECUTE
+    // Every 15 seconds
+    cron.schedule("*/15 * * * * *", function () {
+        console.log(15);
+    });
+
+    // Every 10 minutes
+    cron.schedule("*/10 * * * *", function () {
+        console.log(1);
+    });
 };
 
 runScript();
