@@ -1,5 +1,8 @@
 /node_modules
 /db
+.env
+service-account-Capstone-C1SE04-TI-Crawl.json
+service-account-Capstone-C1SE04-TI-Main.json
 
 db.json
 db1.json
@@ -19,8 +22,4 @@ test.json
 schemas.json
 investors.json
 sharks.json
-
-.env
-
-service-account-Capstone-C1SE04-TI-Crawl.json
-service-account-Capstone-C1SE04-TI-Main.json
+metadatas_lastest.json

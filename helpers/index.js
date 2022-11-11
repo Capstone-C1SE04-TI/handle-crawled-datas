@@ -1,15 +1,15 @@
 const _ = require("lodash");
 
-function randomFirestoreDocumentId() {
+const randomFirestoreDocumentId = () => {
     const validCharacters =
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split(
             "",
         );
     const length = 20;
     return _.sampleSize(validCharacters, length).join("");
-}
+};
 
-function convertUnixTimestampToNumber(unixTimestamp) {
+const convertUnixTimestampToNumber = (unixTimestamp) => {
     const date = new Date(unixTimestamp * 1000);
 
     const year =
@@ -37,6 +37,6 @@ function convertUnixTimestampToNumber(unixTimestamp) {
     const formattedTimeNumber = Number(formattedTimeStr);
 
     return formattedTimeNumber;
-}
+};
 
 module.exports = { randomFirestoreDocumentId, convertUnixTimestampToNumber };

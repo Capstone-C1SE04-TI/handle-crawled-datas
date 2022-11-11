@@ -60,14 +60,20 @@ const runScript = async () => {
     // await updateTokensFields();
 
     // CRONJOB - AUTOMATION EXECUTE
-    // Every 15 seconds
-    cron.schedule("*/15 * * * * *", function () {
-        console.log(15);
-    });
 
     // Every 10 minutes
-    cron.schedule("*/10 * * * *", function () {
+    cron.schedule("*/10 * * * *", () => {
         console.log(1);
+    });
+
+    // Every hour at 0th minute
+    cron.schedule("0 * * * *", () => {
+        console.log(2);
+    });
+
+    // Every day at 00:00:00
+    cron.schedule("0 0 * * *", () => {
+        console.log(3);
     });
 };
 
