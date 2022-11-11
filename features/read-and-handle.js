@@ -1,11 +1,4 @@
 const database = require("../configs/connect-database");
-const {
-    query,
-    collection,
-    where,
-    getDocs,
-    getFirestore,
-} = require("firebase/firestore");
 const { convertUnixTimestampToNumber } = require("../helpers");
 
 const getListOfCoins = async () => {

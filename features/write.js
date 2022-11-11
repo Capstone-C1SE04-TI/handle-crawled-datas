@@ -1,5 +1,5 @@
 const database = require("../configs/connect-database");
-const DB = require("../db.json");
+
 const DB1 = require("../db1.json");
 const DB2 = [];
 const DB3 = [];
