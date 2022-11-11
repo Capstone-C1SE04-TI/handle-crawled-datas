@@ -23,6 +23,18 @@ const {
     handleDetailChartTransaction,
 } = require("./features/write");
 
+const getDatasEvery10Minutes = () => {};
+
+const updateDatasEvery10Minutes = () => {};
+
+const getDatasEveryHour = () => {};
+
+const updateDatasEveryHour = () => {};
+
+const getDatasEveryDay = () => {};
+
+const updateDatasEveryDay = () => {};
+
 const runScript = async () => {
     // Step 1: Read & Handle datas
     // const data1 = await exportCollection("users");
@@ -58,23 +70,27 @@ const runScript = async () => {
     // });
     // Step 3: Write handled datas into DB
     // await updateTokensFields();
-
-    // CRONJOB - AUTOMATION EXECUTE
-
-    // Every 10 minutes
-    cron.schedule("*/10 * * * *", () => {
-        console.log(1);
-    });
-
-    // Every hour at 0th minute
-    cron.schedule("0 * * * *", () => {
-        console.log(2);
-    });
-
-    // Every day at 00:00:00
-    cron.schedule("0 0 * * *", () => {
-        console.log(3);
-    });
 };
 
-runScript();
+/* --- AUTOMATION EXECUTING --- */
+
+// Every 10 minutes
+cron.schedule("*/10 * * * *", () => {
+    getDatasEvery10Minutes();
+    updateDatasEvery10Minutes();
+    console.log("getDatasEvery10Minutes");
+});
+
+// Every hour at 0th minute
+cron.schedule("0 * * * *", () => {
+    getDatasEveryHour();
+    updateDatasEveryHour();
+    console.log("getDatasEveryHour");
+});
+
+// Every day at 00:00:00
+cron.schedule("0 0 * * *", () => {
+    getDatasEveryDay();
+    updateDatasEveryDay();
+    console.log("getDatasEveryDay");
+});
