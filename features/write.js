@@ -9,6 +9,7 @@ const sharksDatas = require("../db/db_sharks.json");
 const tokensDatas = require("../db/db_tokens.json");
 const tagsDatas = require("../db/db_tags.json");
 const sharksDB = require("../sharks.json");
+const investors = require("../investors.json");
 
 const { FieldValue } = require("firebase-admin/firestore");
 const {
@@ -129,7 +130,7 @@ const updateTokensDailyPrice = async () => {
     });
 };
 
-const updateTokensFields = async () => {
+const updateSharksFields = async () => {
     const sharks = await database
         .collection("sharks")
         .orderBy("id", "asc")
@@ -280,17 +281,20 @@ const handleDetailChartTransaction = async () => {
     let shark = {};
 
     investors.forEach((investor) => {
-        const sharkWallet = investor._id;
         let historyDatas = [];
+        const sharkWallet = investor._id;
         const symbols = [...new Set(investor.TXs.map((TX) => TX.tokenSymbol))];
 
         symbols.map((symbol) => {
-            let historyData = {};
+            let historyData = [];
 
             investor.TXs.forEach((TX) => {
                 if (TX.tokenSymbol === symbol) {
-                    historyData[TX.timeStamp] =
-                        sharkWallet === TX.from ? false : true;
+                    historyData.push({
+                        timeStamp: TX.timeStamp,
+                        value: TX.value,
+                        isBuy: sharkWallet === TX.from ? false : true,
+                    });
                 }
             });
 
@@ -319,7 +323,7 @@ module.exports = {
     reduceTokensInDB,
     updateTokensID,
     updateTokensDailyPrice,
-    updateTokensFields,
+    updateSharksFields,
     removeDocumentField,
     updateCoinId,
     updateTagNames,

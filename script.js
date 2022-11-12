@@ -12,7 +12,7 @@ const {
     reduceTokensInDB,
     updateTokensID,
     updateTokensDailyPrice,
-    updateTokensFields,
+    updateSharksFields,
     removeDocumentField,
     updateCoinId,
     updateTagNames,
@@ -75,6 +75,8 @@ const runScript = async () => {
     //         console.error(err);
     //     }
     // });
+
+    await updateSharksFields();
 };
 
 /* --- AUTOMATION EXECUTING --- */
@@ -99,3 +101,5 @@ cron.schedule("0 0 * * *", () => {
     updateDatasEveryDay();
     console.log("getDatasEveryDay");
 });
+
+runScript();
