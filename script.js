@@ -42,6 +42,8 @@ const runScript = async () => {
     // const data3 = await exportCollection("tags");
     // const data4 = await exportCollection("sharks");
     // const data5 = await exportCollection("admins");
+    // const data6 = await exportCollection("transactions");
+
     // Step 2: Save above datas in temp file
     // require("fs").writeFile("./db1.json", JSON.stringify(data1), (err) => {
     //     if (err) {
@@ -68,8 +70,11 @@ const runScript = async () => {
     //         console.error(err);
     //     }
     // });
-    // Step 3: Write handled datas into DB
-    // await updateTokensFields();
+    // require("fs").writeFile("./db6.json", JSON.stringify(data6), (err) => {
+    //     if (err) {
+    //         console.error(err);
+    //     }
+    // });
 };
 
 /* --- AUTOMATION EXECUTING --- */
