@@ -1,4 +1,5 @@
 const cron = require("node-cron");
+const _ = require("lodash");
 const {
     getListOfCoins,
     getListOfTokens,
@@ -74,7 +75,19 @@ const runScript = async () => {
     //         console.error(err);
     //     }
     // });
-    // await updateSharksFields();
+    const sharks = await handleDetailChartTransaction();
+    require("fs").writeFile("./sharks.json", JSON.stringify(sharks), (err) => {
+        if (err) {
+            console.error(err);
+        }
+    });
+    // console.log(_.toString(1111));
+    // console.log(
+    //     _.toInteger(
+    //         _.toInteger("90000000000000000000000") /
+    //             _.toInteger(10 ^ _.toInteger("18")),
+    //     ),
+    // );
 };
 
 /* --- AUTOMATION EXECUTING --- */

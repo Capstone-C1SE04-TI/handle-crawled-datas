@@ -15,6 +15,7 @@ const { FieldValue } = require("firebase-admin/firestore");
 const {
     randomFirestoreDocumentId,
     convertUnixTimestampToNumber,
+    scientificNotationEToLongStringNumber,
 } = require("../helpers");
 const _ = require("underscore");
 
@@ -290,10 +291,16 @@ const handleDetailChartTransaction = async () => {
 
             investor.TXs.forEach((TX) => {
                 if (TX.tokenSymbol === symbol) {
+                    const n1 = BigInt(TX.value);
+                    const n2 = BigInt(
+                        Number(Math.pow(10, Number(TX.tokenDecimal))),
+                    );
+
                     historyData.push({
                         timeStamp: TX.timeStamp,
-                        value: TX.value,
-                        isBuy: sharkWallet === TX.from ? false : true,
+                        value: "" + Number(BigInt(n1 / n2)),
+                        status:
+                            sharkWallet === TX.from ? "withdraw" : "deposit",
                     });
                 }
             });
