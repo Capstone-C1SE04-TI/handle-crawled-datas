@@ -88,4 +88,8 @@ const exportCollection = async (collectionName) => {
     return datasList;
 };
 
-module.exports = { getListOfCoins, getListOfTokens, exportCollection };
+module.exports = {
+    getListOfCoins,
+    getListOfTokens,
+    exportCollection,
+};
