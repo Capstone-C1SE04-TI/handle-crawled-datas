@@ -2,9 +2,9 @@
     "name": "handle-crawled-datas",
     "version": "1.0.0",
     "description": "Capstone Project 1 - Source Handle Crawled Datas",
-    "main": "src/index.js",
+    "main": "index.js",
     "scripts": {
-        "start": "nodemon src/index.js",
+        "start": "node index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [
@@ -23,7 +23,6 @@
         "lodash": "^4.17.21",
         "node-cron": "^3.0.2",
         "node-fetch": "^2.6.7",
-        "nodemon": "^2.0.19",
         "underscore": "^1.13.6"
     },
     "engines": {
